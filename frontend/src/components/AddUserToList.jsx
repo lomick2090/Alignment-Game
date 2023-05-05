@@ -1,6 +1,7 @@
-import { db } from '../config/firebase'
+import { db, auth } from '../config/firebase'
 import { getDocs, addDoc, collection } from 'firebase/firestore'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 
 export default function AddUserToList() {
@@ -28,7 +29,8 @@ export default function AddUserToList() {
         setUser(prevUser => {
             return {
                 ...prevUser,
-                [name]:value
+                [name]:value,
+                userId: auth?.currentUser?.uid
             }
         })
     }
@@ -49,21 +51,27 @@ export default function AddUserToList() {
 
     return(
         <div>
-            <input type='text' placeholder='name' value={user.name} name='name' onChange={handleChange}/>
-            <label>Profile Pic: <input type='file' accept="image/png, image/jpeg"/></label>
-            <label htmlFor="group">Select Group:
-            <select name="group" id="group" value={user.group} onChange={handleChange}>
-                {groups && groups.map(group => {
-                    let groupName = group.groupName
-                    return (
-                        <option value={groupName}>{groupName}</option>
-                    )
-                })}
-            </select>
-            </label>
-
-
-            <button onClick={handleSubmit}>Submit</button>
+            {/*auth.currentUser.id ?*/
+            <div>
+                <input type='text' placeholder='name' value={user.name} name='name' onChange={handleChange}/>
+                <label>Profile Pic: <input type='file' accept="image/png, image/jpeg"/></label>
+                <label htmlFor="group">Select Group:
+                <select name="group" id="group" value={user.group} onChange={handleChange}>
+                    {groups && groups.map(group => {
+                        let groupName = group.groupName
+                        return (
+                            <option value={groupName}>{groupName}</option>
+                        )
+                    })}
+                </select>
+                </label>
+                <button onClick={handleSubmit}>Submit</button>
+            </div> 
+            /*:
+            <Link to='../login'>
+                <button>Please login here first</button>
+            </Link> */
+            }
         </div>
     )
 }
