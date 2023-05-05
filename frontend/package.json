@@ -10,9 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "buffer": "^6.0.3",
+    "dotenv": "^16.0.3",
     "mysql2": "^3.2.4",
+    "process": "^0.11.10",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.1",
+    "stream": "^0.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

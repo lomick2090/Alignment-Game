@@ -1,0 +1,22 @@
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: var(--bs-purple);
+    color: white;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+
+.header > Link {
+    color: white;
+    margin: 8px;
+}
+
+.title {
+    margin-right: auto;
+}
