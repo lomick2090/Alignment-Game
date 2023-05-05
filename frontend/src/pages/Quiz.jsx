@@ -1,35 +1,27 @@
 import { useState, useEffect } from 'react';
 import { db } from "../config/firebase"
 import { getDocs, collection } from 'firebase/firestore'
+import AddUserToList from '../components/AddUserToList'
 
 export default function Quiz() {
     const [userList, setUserList] = useState([]);
 
-    const userCollectionRef = collection(db, "users")
-
+    const usersRef = collection(db, 'users')
     useEffect(() => {
-        async function getMovieList() {
-            try {
-                const data = await getDocs(userCollectionRef);
-                const filteredData = data.docs.map((doc) => {
-                    return {
-                        ...doc.data(),
-                        id: doc.id
-                    }
-                })
-                setUserList(filteredData)
-            } catch (err) {
-                console.log(err)
-            }
+        async function getUserList() {
+            const data = await getDocs(usersRef)
+            const filteredData = data.docs.map(doc => ({
+                ...doc.data(),
+                id: doc.id
+            }))
+            setUserList(filteredData)
         }
-        getMovieList()
+        getUserList()
     }, [])
-
-
 
     return (
         <div>
-            
+            <AddUserToList />
         </div>
     )
 }
