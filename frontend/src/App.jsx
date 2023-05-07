@@ -7,14 +7,11 @@ import Create from './pages/Create'
 import Login from './pages/Login'
 import Groups from './pages/Groups'
 import CreateProfile from './pages/CreateProfile'
-import { connectAuthEmulator } from "firebase/auth";
-import { auth } from './config/firebase'
 
 
 
 export default function App() {
 
-    connectAuthEmulator(auth, "http://localhost:5173")
     
     return (
         <Routes>
