@@ -1,18 +1,29 @@
 import Auth from '../components/Auth'
 import { auth } from '../config/firebase'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Routes, Route } from 'react-router-dom'
+import { useState } from 'react'
+import CreateProfile from './CreateProfile'
+
 
 
 export default function Login() {
+
+    const [userId, setUserId] = useState(null)
+
+    console.log(userId)
     return (
         <div>
             {
-                auth?.currentUser?.id ?
-                <Navigate to='login/createprofile' />
+                userId ? 
+                <Navigate to='createprofile' />
                 :
             
-                <Auth />
+                <Auth setUserId={setUserId} />
             }
+
+            <Routes>
+                <Route path='createprofile' element={<CreateProfile />}/>
+            </Routes>
         </div>
     )
 }

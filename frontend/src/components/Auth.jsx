@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react'
 import { signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 
-export default function Auth() {
+export default function Auth(props) {
     
    // const [login, setLogin] = useState({
    //     email: '',
@@ -13,19 +13,6 @@ export default function Auth() {
    console.log(auth?.currentUser?.uid)
 
     const provider = new TwitterAuthProvider();
-
-
-
-
-    // function handleChange(e) {
-    //     const { name, value } = e.target
-    //     setLogin(prevLogin => {
-    //         return {
-    //             ...prevLogin,
-    //             [name]: value
-    //         }
-    //     })
-    // }
 
     async function signIn() {
         //await createUserWithEmailAndPassword(auth, login.email, login.password)
@@ -41,8 +28,10 @@ export default function Auth() {
             const user = result.user;
             // IdP data available using getAdditionalUserInfo(result)
             // ...
+            props.setUserId(user.uid)
         }).catch((error) => {
             // Handle Errors here.
+            console.log(error)
             const errorCode = error.code;
             const errorMessage = error.message;
             // The email of the user's account used.

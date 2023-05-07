@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, Routes, Route } from 'react-router-dom'
 import { db } from "../config/firebase"
 import { getDocs, collection } from 'firebase/firestore'
 import { auth } from '../config/firebase';
+import GroupPage from './GroupPage';
 
 export default function Groups() {
     const [userList, setUserList] = useState([]);
@@ -36,27 +37,23 @@ export default function Groups() {
     const groupElements = groupList.map((group) => {
         return (
             <div key={group.groupName}>
-                <button onClick={() => setGroup(group.groupName)}>
-                <h1>{group.groupName}</h1>
-                </button>
+                <Link to={`${group.groupName}`}>
+                    <button>
+                        <h1>{group.groupName}</h1>
+                    </button>
+                </Link>
             </div>
         )
     })
     return (
         <div>
-            {
-                auth?.currentUser?.id ?
-                <Navigate to='/login' />
-                :
-               (group ?
-               
-               <div>quiz</div>
-               :
-                <div>
-                    <h1>Choose Group:</h1>
-                    {groupElements}
-                </div>)  
-            }
+            <div>
+                <h1>Choose Group:</h1>
+                {groupElements}
+            </div>
+            <Routes>
+                <Route path=":groupName" element={<GroupPage />} />
+            </Routes>
         </div>
     )
 }

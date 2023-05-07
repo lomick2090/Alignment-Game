@@ -22,7 +22,7 @@ export default function Home() {
             </p>
 
             {
-                !auth?.currentUser?.id
+                !auth?.currentUser
                 &&
                 <Link to='login'><button>Try It Now!</button></Link>
             }

@@ -33,3 +33,18 @@ body {
     gap: 10px;
 }
 
+.grouppage {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:40vw;
+    height: 40vw;
+    background-image: url('./images/alignmentChart.png');
+    background-size: 40vw 40vw
+}
