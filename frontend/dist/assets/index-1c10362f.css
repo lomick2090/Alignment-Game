@@ -1,0 +1,1 @@
+body{margin:0;padding:0}.header{background-color:var(--bs-purple);color:#fff;display:flex;margin-bottom:10px}.header>Link{color:#fff;margin:8px}.title{margin-right:auto}.userform{display:flex;flex-direction:column;border:1px solid black;border-radius:25px;width:25vw;padding:1vw;text-align:center;align-items:center;gap:10px}
