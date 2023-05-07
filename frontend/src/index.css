@@ -43,8 +43,8 @@ body {
     display:flex;
     justify-content: center;
     align-items: center;
-    width:40vw;
-    height: 40vw;
+    width: min(90vw, 80vh);
+    height: min(90vw, 80vh);
     background-image: url('./images/alignmentChart.png');
-    background-size: 40vw 40vw
+    background-size: min(90vw, 80vh) min(90vw, 80vh)
 }
