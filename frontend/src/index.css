@@ -20,3 +20,16 @@ body {
 .title {
     margin-right: auto;
 }
+
+.userform {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 25px;
+    width: 25vw;
+    padding: 1vw;
+    text-align: center;
+    align-items: center;
+    gap: 10px;
+}
+

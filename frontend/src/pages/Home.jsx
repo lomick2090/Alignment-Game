@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import { auth } from '../config/firebase';
 
 export default function Home() {
     
@@ -15,10 +17,16 @@ export default function Home() {
 
             </p>
             <p>
-                Once you've completed the quiz, you'll be able to share your results on social media or with your friends directly. You can also discuss your results and what they might mean for your friendships or group dynamics.
+                Once you've completed the quiz, you'll be able to discuss your results and what they might mean for your friendships or group dynamics.
                 So what are you waiting for? Take the alignment quiz now and find out where you and your friends stand on the classic D&D alignment chart!
             </p>
 
+            {
+                !auth?.currentUser?.id
+                &&
+                <Link to='login'><button>Try It Now!</button></Link>
+            }
+                <Link to='groups'><button>View Groups</button></Link>
         </div>
     )
 }

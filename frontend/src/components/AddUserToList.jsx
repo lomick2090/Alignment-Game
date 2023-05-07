@@ -1,6 +1,6 @@
 import { db, auth, storage } from '../config/firebase'
 import { getDocs, addDoc, collection } from 'firebase/firestore'
-import { getStorage, ref, uploadBytes } from "firebase/storage"
+import { ref, uploadBytes } from "firebase/storage"
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -71,10 +71,11 @@ export default function AddUserToList() {
     return(
         <div>
             {/*auth.currentUser.id ?*/
-            <div>
+            <div className='userform'>
+                <h1>Add Yourself!</h1>
                 <input 
                     type='text' 
-                    placeholder='name' 
+                    placeholder='Name' 
                     value={user.name} 
                     name='name' 
                     onChange={handleChange}

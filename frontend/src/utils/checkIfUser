@@ -1,0 +1,19 @@
+import { db, auth } from "../config/firebase";
+import { getDocs, collection } from 'firebase/firestore'
+
+
+export default async function checkIfUser() {
+    let answer = false;
+    let id = auth?.currentUser?.id
+    const usersRef = collection(db, 'users');
+    const data = await getDocs(groupsRef)
+    const filteredData = data.docs.map(doc => (doc.data()))
+
+    filteredData.forEach(user => {
+        if (user.userId == id) {
+            answer = true
+        }
+    })
+        
+    return answer
+}
