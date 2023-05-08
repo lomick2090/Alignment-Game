@@ -58,8 +58,8 @@ export default function AddUserToList() {
                 await addDoc(usersRef, {
                     name: user.name,
                     group: user.group,
-                    lawfulVotes: [0],
-                    goodVotes: [0],
+                    lawfulVotes: [],
+                    goodVotes: [],
                     userId: auth?.currentUser?.uid,
                     picture: `images/${auth?.currentUser?.uid}`
                 })

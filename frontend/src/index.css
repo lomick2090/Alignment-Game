@@ -48,3 +48,9 @@ body {
     background-image: url('./images/alignmentChart.png');
     background-size: min(90vw, 80vh) min(90vw, 80vh)
 }
+
+.userholder{
+    position: relative;
+    width:0px;
+    height:0px;
+}
