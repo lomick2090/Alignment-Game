@@ -1,5 +1,5 @@
 import AddUserToList from "../components/AddUserToList"
-import checkIfUser from '../utils/checkIfUser'
+import returnUser from '../utils/returnUser'
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 
@@ -8,8 +8,9 @@ export default function CreateProfile() {
 
     useEffect(() => {
         async function check() {
-            const answer = await checkIfUser()
-            setUserExists(answer)
+            const answer = await returnUser()
+            
+            setUserExists(answer ? true : false)
         }
         check()
     }, [])

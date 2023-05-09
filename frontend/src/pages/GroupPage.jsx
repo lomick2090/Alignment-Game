@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { db, auth, storage } from "../config/firebase"
 import { getDocs, collection } from "firebase/firestore"
 import { ref, getDownloadURL } from 'firebase/storage'
+import returnUser from "../utils/returnUser"
 import User from '../components/User'
 
 
@@ -37,7 +38,6 @@ export default function GroupPage() {
                 }))
 
                 setUserList(usableList) 
-                console.log(usableList) 
             } catch(err) {
                 console.log(err)
             }   
@@ -45,17 +45,34 @@ export default function GroupPage() {
         getUserList()
     }, [])
 
-
+    console.log(returnUser())
 
     const userElements = userList.map(user => {
         const {goodVotes, lawfulVotes, name, pictureURL} = user
         return( <User key={name} goodVotes={goodVotes} lawfulVotes={lawfulVotes} name={name} pictureURL={pictureURL} />)
     })
-
-
     return (
         <div className="grouppage">
-            {groupName}
+            <div>
+                <h1>{groupName}</h1>
+                {
+                    auth?.currentUser?.uid 
+                    &&
+                    (
+                        !(returnUser() ? true : false) ? 
+                        <Link to='../../create'><button>Create Profile</button></Link>
+                        :
+                        (
+                            returnUser().group == groupName ?
+                            <Link to='quiz'><button>Take Group Quiz</button></Link>
+                            :
+                            <button>Join Group</button>
+                        )
+                    )
+
+
+                }
+            </div>
             <div className="chart">
                 {userElements}
             </div>
