@@ -15,44 +15,49 @@ export default function GroupPage() {
 
     useEffect(() => {
         async function getUserList() {
-            const data = await getDocs(usersRef)
-            const filteredList = data.docs.filter(user => {
-               return (user.data().group == groupName)
-            })
+            try {
 
-            let usableList = [];
-            filteredList.forEach(async user => {
-                const {goodVotes, lawfulVotes, name, picture} = user.data()
-                const imageRef = ref(storage, picture)
-                let url = await getDownloadURL(imageRef)
-
-                usableList.push({
-                    name,
-                    goodVotes,
-                    lawfulVotes,
-                    url
+                const data = await getDocs(usersRef)
+                const filteredList = data.docs.filter(user => {
+                   return (user.data().group == groupName)
                 })
-            })
-            setUserList(usableList)     
+
+
+                let usableList = await Promise.all(filteredList.map(async user => {
+                    const {goodVotes, lawfulVotes, name, picture} = user.data()
+                    const imageRef = ref(storage, picture)
+                    let pictureURL = await getDownloadURL(imageRef)
+
+                    return {
+                        name,
+                        goodVotes,
+                        lawfulVotes,
+                        pictureURL
+                    }
+                }))
+
+                setUserList(usableList) 
+                console.log(usableList) 
+            } catch(err) {
+                console.log(err)
+            }   
         }
         getUserList()
     }, [])
 
+
+
     const userElements = userList.map(user => {
-        //const {goodVotes, lawfulVotes, name, picture} = user.data()
-        console.log(user)
+        const {goodVotes, lawfulVotes, name, pictureURL} = user
+        return( <User key={name} goodVotes={goodVotes} lawfulVotes={lawfulVotes} name={name} pictureURL={pictureURL} />)
     })
 
-
-    userElements
 
     return (
         <div className="grouppage">
             {groupName}
             <div className="chart">
-                <div className="userholder">
-                </div>
-
+                {userElements}
             </div>
             
         </div>
