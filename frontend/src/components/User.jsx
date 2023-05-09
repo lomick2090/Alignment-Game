@@ -2,21 +2,18 @@ import { useState } from 'react'
 
 export default function User(props) {
     const [hovered, setHovered] = useState(false);
-    const [selected, setSelected] = useState(false)
 
     function toggleHover() {
         setHovered(prevHover => !prevHover)
     }
 
-    function toggleSelected() {
-        setSelected(prevSelect => !prevSelect)
-    }
+
 
     const avgLawful = ((props.lawfulVotes.reduce((a,b) => a + b, 0))/(props.lawfulVotes.length)) || 0
     const avgGood = ((props.goodVotes.reduce((a,b) => a + b, 0))/(props.goodVotes.length)) || 0
     //min(90vw, 80vh)
 
-    const styles = {
+    const userStyle = {
         backgroundImage: `url(${props.pictureURL})`,
         position: 'absolute',
         left: `${avgLawful * 4.75}%`,
@@ -27,18 +24,29 @@ export default function User(props) {
         borderRadius: '50%'
     }
 
+    const picStyle = {
+        width: '115px',
+        borderRadius: '40%',
+    }
+
+    const userClass = (
+        'userinfo ' +(avgGood > 16 ? 'userinfotop ' : '') + (avgLawful > 16 ? 'userinfoleft' : '')
+    )
+
     return (
         <div 
-            style={styles}
+            style={userStyle}
             onMouseEnter={toggleHover}
             onMouseLeave={toggleHover}
         >
             {
-                (hovered || selected)
+                (hovered)
                 &&
-                <div className={avgGood < 4  ? 'userinfo userinfobottom' : 'userinfo'}>
-                    <img src={`url(${props.pictureURL})`} width={'20px'}/>
+                <div className={userClass}>
+                    <img src={props.pictureURL} style={picStyle} />
                     <h2>{props.name}</h2>
+                    <p>Good Score: {-(avgGood -10)}</p>
+                    <p>Lawful Score: {-(avgLawful -10)}</p>
                 </div>
             }
         </div>

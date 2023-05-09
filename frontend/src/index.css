@@ -59,13 +59,21 @@ body {
 .userinfo {
     background-color: white;
     position: absolute;
-    top: max(-4.5vw, -4vh);
+    top: min(4.5vw, 4vh);
     border:1px solid black;
     z-index: 1;
-    border-radius: 40%;
-    padding: 5px;
+    padding: 10px;
+    height: 275px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.userinfobottom {
-    top: max(4.5vw, 4vh);
+.userinfotop {
+    top: -280px;
+}
+
+.userinfoleft {
+    left: -125px;
 }
