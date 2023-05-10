@@ -1,6 +1,6 @@
 import { db, auth, storage } from '../config/firebase'
 import { getDocs, addDoc, collection } from 'firebase/firestore'
-import { ref, uploadBytes } from "firebase/storage"
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -48,9 +48,13 @@ export default function AddUserToList() {
         if (!user.name || !user.group || !user.img) {
             alert('please fill all fields')
         } else {
+            let pictureURL
             try {
-                const storageRef = ref(storage, `images/${auth?.currentUser?.uid}`);
+                let imagePath =`images/${auth?.currentUser?.uid}`
+                const storageRef = ref(storage, imagePath);
                 await uploadBytes(storageRef, user.img)
+                const imageRef = ref(storage, imagePath)
+                pictureURL = await getDownloadURL(imageRef)
             } catch(err) {
                 console.log(err)
             }
@@ -61,7 +65,7 @@ export default function AddUserToList() {
                     lawfulVotes: [],
                     goodVotes: [],
                     userId: auth?.currentUser?.uid,
-                    picture: `images/${auth?.currentUser?.uid}`
+                    pictureURL
                 })
             } catch(err) {
                 console.log(err)

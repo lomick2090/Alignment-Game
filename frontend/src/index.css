@@ -77,3 +77,27 @@ body {
 .userinfoleft {
     left: -125px;
 }
+
+.quizpage {
+    text-align: center;
+}
+
+.quizpage > h1 {
+    font-size: 4vw;
+}
+
+.quizunit {
+    border: 1px solid black;
+}
+
+.quizunit > h2 {
+    font-size: 3vw;
+}
+
+.quizunit > img {
+    width: 10vw
+}
+
+.quizunit > input {
+    width: 40vw;
+}

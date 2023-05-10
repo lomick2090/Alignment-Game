@@ -29,11 +29,12 @@ export default function Quiz() {
         })
         setVoteInfo(votes)
 
-    }, [])
+    }, [userList])
 
-    console.log(voteInfo)
-    console.log(filteredUserList)
+    function handleSubmit() {
 
+    }
+    
     const quizElements = filteredUserList.map((user, index) => {
         return <QuizUnit 
                 key={user.name} 
@@ -46,9 +47,10 @@ export default function Quiz() {
 
     
     return (
-        <div>
-           <h1>{groupName} Assessment</h1>
+        <div className="container quizpage">
+           <h1>{groupName} quiz</h1>
             {quizElements}
+            <button onClick={handleSubmit}>Submit</button>
         </div>
     )
 }

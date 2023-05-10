@@ -19,9 +19,9 @@ export default function CreateProfile() {
     return (
         <div>
             {
-                userExists ?
-                <Navigate to='../../groups' />
-                :
+                //userExists ?
+                //<Navigate to='../../groups' />
+               // :
                 <AddUserToList />
             }
 

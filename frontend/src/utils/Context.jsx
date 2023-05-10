@@ -17,11 +17,9 @@ function UserContextProvider({children}) {
                return user.data()
             })
 
-
+            
             let usableList = await Promise.all(filteredList.map(async user => {
-                const {goodVotes, lawfulVotes, name, picture, userId, group} = user.data()
-                const imageRef = ref(storage, picture)
-                let pictureURL = await getDownloadURL(imageRef)
+                const {goodVotes, lawfulVotes, name, pictureURL, userId, group} = user.data()
 
                 return {
                     name,
@@ -32,6 +30,7 @@ function UserContextProvider({children}) {
                     group
                 }
             }))
+            
 
             setUserList(usableList) 
         } catch(err) {

@@ -12,10 +12,10 @@ export default function QuizUnit(props) {
             return tempVotes
         })
     }
-
     return (
-        <div>
+        <div className='quizunit'>
             <h2>{props.user.name}</h2>
+            <img src={props.user.pictureURL} />
 
             <p>Goodness Score:</p>
             <input
@@ -24,7 +24,7 @@ export default function QuizUnit(props) {
                 min={0}
                 max={20}
                 onChange={(e) => setValue(e)}
-                value={props.voteInfo?.goodVote.value}
+                value={props.voteInfo?.goodVote}
             />
 
             <p>Lawfulness Score:</p>
@@ -33,9 +33,12 @@ export default function QuizUnit(props) {
                 name='lawfulVote'
                 min={0}
                 max={20}
-                onChange={(e) => setValue(e.target.value)}
-                value={props.voteInfo?.lawfulVote.value}
+                onChange={(e) => setValue(e)}
+                value={props.voteInfo?.lawfulVote}
             />
+
+            <br />
+            <br />
         </div>
     )
     
