@@ -1,13 +1,12 @@
 
 export default function QuizUnit(props) {
-    console.log(props)
 
     function setValue(e) {
         const { value, name } = e.target
         props.setVoteInfo(prevVotes => {
             let tempVotes = [...prevVotes]
-            tempVotes[index] = {
-                ...tempVotes[index],
+            tempVotes[props.index] = {
+                ...tempVotes[props.index],
                 [name]: value
             }
             return tempVotes
@@ -25,7 +24,7 @@ export default function QuizUnit(props) {
                 min={0}
                 max={20}
                 onChange={(e) => setValue(e)}
-                value={props.voteInfo.goodVote.value}
+                value={props.voteInfo?.goodVote.value}
             />
 
             <p>Lawfulness Score:</p>
@@ -35,7 +34,7 @@ export default function QuizUnit(props) {
                 min={0}
                 max={20}
                 onChange={(e) => setValue(e.target.value)}
-                value={props.voteInfo.lawfulVote.value}
+                value={props.voteInfo?.lawfulVote.value}
             />
         </div>
     )
