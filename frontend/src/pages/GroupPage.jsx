@@ -1,19 +1,21 @@
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { db, auth, storage } from "../config/firebase"
 import { getDocs, collection } from "firebase/firestore"
 import { ref, getDownloadURL } from 'firebase/storage'
+import { useUserContext } from "../utils/Context"
 import returnUser from "../utils/returnUser"
 import User from '../components/User'
 
 
 export default function GroupPage() {
-    const [userList, setUserList] = useState([])
+    //const [userList, setUserList] = useState([])
     const { groupName } = useParams()
     
-    const usersRef = collection(db, 'users')
- 
+    //const usersRef = collection(db, 'users')
+    const userList = useUserContext()
 
+    /*
     useEffect(() => {
         async function getUserList() {
             try {
@@ -25,7 +27,7 @@ export default function GroupPage() {
 
 
                 let usableList = await Promise.all(filteredList.map(async user => {
-                    const {goodVotes, lawfulVotes, name, picture} = user.data()
+                    const {goodVotes, lawfulVotes, name, picture, userId, group} = user.data()
                     const imageRef = ref(storage, picture)
                     let pictureURL = await getDownloadURL(imageRef)
 
@@ -33,7 +35,9 @@ export default function GroupPage() {
                         name,
                         goodVotes,
                         lawfulVotes,
-                        pictureURL
+                        pictureURL,
+                        userId,
+                        group
                     }
                 }))
 
@@ -44,10 +48,12 @@ export default function GroupPage() {
         }
         getUserList()
     }, [])
+    */
+    const userListOfGroup = userList.filter(user => {
+        return user.group = groupName
+    })
 
-    console.log(returnUser())
-
-    const userElements = userList.map(user => {
+    const userElements = userListOfGroup.map(user => {
         const {goodVotes, lawfulVotes, name, pictureURL} = user
         return( <User key={name} goodVotes={goodVotes} lawfulVotes={lawfulVotes} name={name} pictureURL={pictureURL} />)
     })
@@ -56,14 +62,14 @@ export default function GroupPage() {
             <div>
                 <h1>{groupName}</h1>
                 {
-                    auth?.currentUser?.uid 
+                    (auth?.currentUser?.uid && userList)
                     &&
                     (
-                        !(returnUser() ? true : false) ? 
+                        !((returnUser(userList)) ? true : false) ? 
                         <Link to='../../create'><button>Create Profile</button></Link>
                         :
                         (
-                            returnUser().group == groupName ?
+                            (returnUser(userList)).group == groupName ?
                             <Link to='quiz'><button>Take Group Quiz</button></Link>
                             :
                             <button>Join Group</button>

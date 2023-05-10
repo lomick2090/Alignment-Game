@@ -1,5 +1,6 @@
 import React from 'react'
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import { UserContextProvider } from './utils/Context';
 import Header from './components/Header'
 import Quiz from './pages/Quiz'
 import Home from './pages/Home'
@@ -14,16 +15,18 @@ export default function App() {
 
     
     return (
-        <Routes>
-            <Route path='/*' element={ <Header /> }>
-                <Route index element={<Home />}/>
-                <Route path='quiz' element={ <Quiz /> } />
-                <Route path='create' element={ <Create /> } />
-                <Route path='login/*' element={ <Login /> } />   
-                <Route path='groups' element={ <Groups /> } />
-                <Route path='groups/:groupName' element={<GroupPage />} />
+        <UserContextProvider>
+            <Routes>
+                <Route path='/*' element={ <Header /> }>
+                    <Route index element={<Home />}/>
+                    <Route path='create' element={ <Create /> } />
+                    <Route path='login/*' element={ <Login /> } />   
+                    <Route path='groups/*' element={ <Groups /> } />
+                    <Route path='groups/:groupName' element={<GroupPage />} />
+                    <Route path='groups/:groupName/quiz' element={<Quiz />} />
 
-            </Route>
-        </Routes>
+                </Route>
+            </Routes>
+        </UserContextProvider>
     )
 }

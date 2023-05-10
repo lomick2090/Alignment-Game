@@ -2,23 +2,15 @@ import { db, auth } from "../config/firebase";
 import { getDocs, collection } from 'firebase/firestore'
 
 
-export default function checkIfUser() {
-    let answer
-    let data
-    const id = auth?.currentUser?.uid
-    const usersRef = collection(db, 'users');
+export default function returnUser(userList) {
+    let answer = false;
+    let id = auth?.currentUser?.uid
     
-    async function getData() {
-        const getdata = await getDocs(usersRef)
-        data = getdata
-    }
-    getData()
-    console.log(data)
-    const filteredData = data.docs.map(doc => (doc.data()))
-    filteredData.forEach(user => {
-        (user.userId == id) ? 
-        answer = user :
-        answer = null
+    userList.forEach(user => {
+        if (user.userId == id) {
+            answer = user
+        }
     })
+        
     return answer
 }

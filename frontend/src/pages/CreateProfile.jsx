@@ -2,20 +2,20 @@ import AddUserToList from "../components/AddUserToList"
 import returnUser from '../utils/returnUser'
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
+import { useUserContext } from "../utils/Context"
 
 export default function CreateProfile() {
     const [userExists, setUserExists] = useState(false)
+    const userList = useUserContext()
 
     useEffect(() => {
         async function check() {
-            const answer = await returnUser()
+            const answer = returnUser(userList)
             
             setUserExists(answer ? true : false)
         }
         check()
     }, [])
-
-    console.log(userExists)
     return (
         <div>
             {
