@@ -1,5 +1,5 @@
 import { db, auth, storage } from '../config/firebase'
-import { getDocs, addDoc, collection } from 'firebase/firestore'
+import { getDocs, setDoc, doc, collection } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -14,7 +14,6 @@ export default function AddUserToList() {
     })
 
     const groupsRef = collection(db, 'groups');
-    const usersRef = collection(db, 'users');
 
     useEffect(() => {
         async function getGroupList() {
@@ -59,13 +58,15 @@ export default function AddUserToList() {
                 console.log(err)
             }
             try {
-                await addDoc(usersRef, {
+                const usersRef = doc(db, 'users', auth?.currentUser?.uid);
+                await setDoc(usersRef, {
                     name: user.name,
                     group: user.group,
                     lawfulVotes: [],
                     goodVotes: [],
                     userId: auth?.currentUser?.uid,
-                    pictureURL
+                    pictureURL,
+                    votes: []
                 })
             } catch(err) {
                 console.log(err)
@@ -74,7 +75,6 @@ export default function AddUserToList() {
     }
     return(
         <div>
-            {/*auth.currentUser.id ?*/
             <div className='userform'>
                 <h1>Add Yourself!</h1>
                 <input 
@@ -115,11 +115,6 @@ export default function AddUserToList() {
                 </label>
                 <button onClick={handleSubmit}>Submit</button>
             </div> 
-            /*:
-            <Link to='../login'>
-                <button>Please login here first</button>
-            </Link> */
-            }
         </div>
     )
 }

@@ -19,7 +19,7 @@ function UserContextProvider({children}) {
 
             
             let usableList = await Promise.all(filteredList.map(async user => {
-                const {goodVotes, lawfulVotes, name, pictureURL, userId, group} = user.data()
+                const {goodVotes, lawfulVotes, name, pictureURL, userId, group, votes} = user.data()
 
                 return {
                     name,
@@ -27,7 +27,8 @@ function UserContextProvider({children}) {
                     lawfulVotes,
                     pictureURL,
                     userId,
-                    group
+                    group,
+                    votes
                 }
             }))
             

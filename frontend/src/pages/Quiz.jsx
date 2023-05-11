@@ -1,8 +1,10 @@
 import { useUserContext } from '../utils/Context';
 import returnUser from '../utils/returnUser';
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import QuizUnit from '../components/QuizUnit';
+import { db } from '../config/firebase'
+import { setDoc, doc } from 'firebase/firestore';
 
 
 export default function Quiz() {
@@ -12,7 +14,8 @@ export default function Quiz() {
     const { groupName } = useParams()
 
     const filteredUserList = userList.filter(user => {
-        if (/*currentUser == user ||*/ groupName != user.group) {
+        const hasVoted = user.votes.filter(id => (id == auth.currentUser?.uid))
+        if (currentUser == user || groupName != user.group || hasVoted) {
             return false
         } else {
             return true
@@ -23,8 +26,14 @@ export default function Quiz() {
         const votes = filteredUserList.map(user => {
             return {
                 name: user.name,
+                group: user.group,
                 goodVote: 10,
-                lawfulVote: 10 
+                lawfulVote: 10,
+                oldGoodVotes: user.goodVotes,
+                oldLawfulVotes: user.lawfulVotes,
+                userId: user.userId,
+                pictureURL: user.pictureURL,
+                votes: user.votes
             }
         })
         setVoteInfo(votes)
@@ -32,7 +41,24 @@ export default function Quiz() {
     }, [userList])
 
     function handleSubmit() {
-
+        voteInfo.map(async user => {
+            const usersRef = doc(db, 'users', user.userId);
+            const newGoodVotes = user.oldGoodVotes.concat(user.goodVote)
+            const newLawfulVotes = user.oldLawfulVotes.concat(user.lawfulVote)
+            const newUserVotes = user.votes.concat(auth.currentUser?.uid)
+            await setDoc(usersRef, {
+                name: user.name,
+                group: user.group,
+                lawfulVotes: newGoodVotes,
+                goodVotes: newLawfulVotes,
+                userId: user.userId,
+                pictureURL: user.pictureURL,
+                votes: newUserVotes
+            })
+            
+            
+        })
+        window.location.href = '..'
     }
     
     const quizElements = filteredUserList.map((user, index) => {
@@ -49,8 +75,18 @@ export default function Quiz() {
     return (
         <div className="container quizpage">
            <h1>{groupName} quiz</h1>
-            {quizElements}
-            <button onClick={handleSubmit}>Submit</button>
+            {
+                (filteredUserList.length > 0) ?
+                <div>
+                {quizElements}
+                <button onClick={handleSubmit}>Submit</button>
+                </div>
+                :
+                <div>
+                    <p>You have already voted on all possible users!</p>
+                    <Link to={`../groups/${groupName}`}>Back</Link>
+                </div>
+            }
         </div>
     )
 }

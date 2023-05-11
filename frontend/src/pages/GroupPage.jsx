@@ -66,7 +66,7 @@ export default function GroupPage() {
                     &&
                     (
                         !((returnUser(userList)) ? true : false) ? 
-                        <Link to='../../create'><button>Create Profile</button></Link>
+                        <Link to='../../login/createprofile'><button>Create Profile</button></Link>
                         :
                         (
                             (returnUser(userList)).group == groupName ?

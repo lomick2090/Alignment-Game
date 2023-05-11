@@ -9,10 +9,8 @@ export default function User(props) {
 
 
 
-    const avgLawful = ((props.lawfulVotes?.reduce((a,b) => a + b, 0))/(props.lawfulVotes?.length)) || 0
-    const avgGood = ((props.goodVotes?.reduce((a,b) => a + b, 0))/(props.goodVotes?.length)) || 0
-    //min(90vw, 80vh)
-
+    const avgLawful = ((props.lawfulVotes?.reduce((a,b) => parseInt(a) + parseInt(b), 0))/(props.lawfulVotes?.length)) || 10
+    const avgGood = ((props.goodVotes?.reduce((a,b) => parseInt(a) + parseInt(b), 0))/(props.goodVotes?.length)) || 10
     const userStyle = {
         backgroundImage: `url(${props.pictureURL})`,
         position: 'absolute',
@@ -45,8 +43,8 @@ export default function User(props) {
                 <div className={userClass}>
                     <img src={props.pictureURL} style={picStyle} />
                     <h2>{props.name}</h2>
-                    <p>Good Score: {(avgGood -10)}</p>
-                    <p>Lawful Score: {(avgLawful -10)}</p>
+                    <p>Good Score: {Math.round((avgGood -10) * 100 ) / 100}</p>
+                    <p>Lawful Score: {Math.round((avgLawful -10) * 100) / 100}</p>
                 </div>
             }
         </div>

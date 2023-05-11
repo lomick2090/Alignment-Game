@@ -7,10 +7,8 @@ import CreateProfile from './CreateProfile'
 
 
 export default function Login() {
-
     const [userId, setUserId] = useState(auth?.currentUser?.uid)
-
-    console.log(userId)
+    
     return (
         <div>
             {

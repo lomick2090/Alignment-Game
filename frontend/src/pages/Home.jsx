@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { auth } from '../config/firebase';
+import { useUserContext } from '../utils/Context';
+import returnUser from '../utils/returnUser';
 
 export default function Home() {
-    
+    const userList = useUserContext();
     return (
         <div className="container">
             <p>
@@ -22,9 +24,9 @@ export default function Home() {
             </p>
 
             {
-                !auth?.currentUser
+                (!auth?.currentUser || !returnUser(userList))
                 &&
-                <Link to='login'><button>Try It Now!</button></Link>
+                <Link to='login'><button>Sign Up Now!</button></Link>
             }
                 <Link to='groups'><button>View Groups</button></Link>
         </div>
