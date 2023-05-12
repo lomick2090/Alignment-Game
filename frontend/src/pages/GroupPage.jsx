@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { db, auth, storage } from "../config/firebase"
-import { getDocs, collection } from "firebase/firestore"
+import { doc, setDoc } from "firebase/firestore"
 import { ref, getDownloadURL } from 'firebase/storage'
 import { useUserContext } from "../utils/Context"
 import returnUser from "../utils/returnUser"
@@ -9,58 +9,45 @@ import User from '../components/User'
 
 
 export default function GroupPage() {
-    //const [userList, setUserList] = useState([])
     const { groupName } = useParams()
-    
-    //const usersRef = collection(db, 'users')
     const userList = useUserContext()
 
-    /*
-    useEffect(() => {
-        async function getUserList() {
-            try {
-
-                const data = await getDocs(usersRef)
-                const filteredList = data.docs.filter(user => {
-                   return (user.data().group == groupName)
-                })
-
-
-                let usableList = await Promise.all(filteredList.map(async user => {
-                    const {goodVotes, lawfulVotes, name, picture, userId, group} = user.data()
-                    const imageRef = ref(storage, picture)
-                    let pictureURL = await getDownloadURL(imageRef)
-
-                    return {
-                        name,
-                        goodVotes,
-                        lawfulVotes,
-                        pictureURL,
-                        userId,
-                        group
-                    }
-                }))
-
-                setUserList(usableList) 
-            } catch(err) {
-                console.log(err)
-            }   
-        }
-        getUserList()
-    }, [])
-    */
     const userListOfGroup = userList.filter(user => {
-        return user.group = groupName
+        return user.group.includes(groupName)
     })
 
     const userElements = userListOfGroup.map(user => {
         const {goodVotes, lawfulVotes, name, pictureURL} = user
         return( <User key={name} goodVotes={goodVotes} lawfulVotes={lawfulVotes} name={name} pictureURL={pictureURL} />)
     })
+
+    async function handleJoin() {
+        const user = returnUser(userList)
+        if (user.group.length > 4) {
+            alert('You can only join 5 groups')
+        } else {
+            const newgroups = user.group.concat(groupName)
+            const usersRef = doc(db, 'users', user.userId);
+            await setDoc(usersRef, {
+                    name: user.name,
+                    group: newgroups,
+                    lawfulVotes: user.lawfulVotes,
+                    goodVotes: user.goodVotes,
+                    userId: user.userId,
+                    pictureURL: user.pictureURL,
+                    votes: user.votes
+            })
+            location.reload()
+        }
+        
+    }
+
+    
+
     return (
         <div className="grouppage">
             <div>
-                <h1>{groupName}</h1>
+                <h1 style={{fontSize: 'min(11vw, 10vh',}}>{groupName}</h1>
                 {
                     (auth?.currentUser?.uid && userList)
                     &&
@@ -69,10 +56,10 @@ export default function GroupPage() {
                         <Link to='../../login/createprofile'><button>Create Profile</button></Link>
                         :
                         (
-                            (returnUser(userList)).group == groupName ?
+                            (returnUser(userList).group.includes(groupName)) ?
                             <Link to='quiz'><button>Take Group Quiz</button></Link>
                             :
-                            <button>Join Group</button>
+                            <button onClick={handleJoin}>Join Group</button>
                         )
                     )
 

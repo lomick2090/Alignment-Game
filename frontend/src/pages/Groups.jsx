@@ -47,9 +47,14 @@ export default function Groups() {
     })
     return (
         <div>
-            <div>
+            <div className='groups'>
                 <h1>Choose Group:</h1>
                 {groupElements}
+                <Link to={`../create`}>
+                    <button>
+                        <h1>Create New</h1>
+                    </button>
+                </Link>
             </div>
             <Routes>
                 <Route path=":groupName" element={<GroupPage />} />
