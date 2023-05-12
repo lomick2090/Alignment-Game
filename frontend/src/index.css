@@ -94,12 +94,19 @@ button:hover {
     display:flex;
     flex-direction: column;
     align-items: center;
+    gap:15px;
 }
 
 .grouppage {
     display:flex;
     flex-direction: column;
     align-items: center;
+    gap:15px;
+}
+
+.createprofile {
+    display: flex;
+    justify-content: center;
 }
 
 .chart {

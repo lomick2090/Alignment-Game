@@ -8,7 +8,7 @@ export default function Home() {
     return (
         <div className="container home" >
             <p>
-                Welcome to our alignment quiz, the perfect way to find out how your friends match up on the classic Dungeons & Dragons alignment scale! 
+                Welcome to Alignment With Friends, the perfect way to find out how your friends match up on the classic Dungeons & Dragons alignment scale! 
                 This quiz is great for getting to know your friends better and finding out where everyone stands when it comes to questions of lawfulness
                 and goodness. 
             </p>
@@ -19,7 +19,7 @@ export default function Home() {
 
             </p>
             <p>
-                Once you've completed the quiz, you'll be able to discuss your results and what they might mean for your friendships or group dynamics.
+                Once you've completed the quiz, you'll be able to see and discuss the results and what they might mean for your friendships or group dynamics.
                 So what are you waiting for? Take the alignment quiz now and find out where you and your friends stand on the classic D&D alignment chart!
             </p>
             <div className='homebuttons'>

@@ -7,7 +7,7 @@ import { useUserContext } from "../utils/Context"
 export default function CreateProfile() {
     const userList = useUserContext()
     return (
-        <div>
+        <div className='createprofile'>
             {
                 returnUser(userList) ?
                 <Navigate to='../../groups' />

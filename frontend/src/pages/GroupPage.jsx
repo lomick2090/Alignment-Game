@@ -46,7 +46,7 @@ export default function GroupPage() {
 
     return (
         <div className="grouppage">
-            <div>
+            
                 <h1 style={{fontSize: 'min(11vw, 10vh',}}>{groupName}</h1>
                 {
                     (auth?.currentUser?.uid && userList)
@@ -65,7 +65,7 @@ export default function GroupPage() {
 
 
                 }
-            </div>
+            
             <div className="chart">
                 {userElements}
             </div>

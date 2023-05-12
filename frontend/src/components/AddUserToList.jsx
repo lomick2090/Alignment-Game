@@ -71,12 +71,13 @@ export default function AddUserToList() {
             } catch(err) {
                 console.log(err)
             }
+            window.location.href = '../groups'
         }
     }
     return(
         <div>
             <div className='userform'>
-                <h1>Add Yourself!</h1>
+                <h1>Create Your Profile!</h1>
                 <input 
                     type='text' 
                     placeholder='Name' 
