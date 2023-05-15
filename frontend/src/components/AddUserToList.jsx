@@ -93,7 +93,7 @@ export default function AddUserToList() {
                     onChange={handleChange}
                 />
 
-                <label>
+                <label className='picselect'>
                     Profile Pic: 
                     <input 
                         name='img'
@@ -104,7 +104,7 @@ export default function AddUserToList() {
                     />
                 </label>
 
-                <label htmlFor="group">
+                <label htmlFor="group" >
                     Select Group:
                     <select 
                         name="group" 

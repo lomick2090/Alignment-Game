@@ -11,6 +11,7 @@ body {
 
 
 .header {
+    padding:20px;
     background-color: var(--bs-purple);
     color: white;
     display:flex;
@@ -18,7 +19,7 @@ body {
     align-items: center;
     margin-bottom: 10px;
     font-family: 'Crimson Pro', serif;
-    font-size:1.8vw;
+    font-size:28px;
 }
 
 .headercontainer {
@@ -36,17 +37,18 @@ body {
 
 .title {
     position: relative;
-    left: -3.3vw;
     margin-right: auto;
     margin-left:auto;
     color:black;
-    font-size: 2vw;
-    
+    font-size: min(32px, 15vw);
+    align-self: center;
+    margin-bottom:0px;
+    white-space:nowrap;
 }
 
 .home > p {
     font-family: 'Crimson Pro', serif;
-    font-size: 1.8vw;
+    font-size: 1.65vw;
 }
 
 .homebuttons {
@@ -79,6 +81,7 @@ button:hover {
 }
 
 .userform {
+    min-width:500px;
     display: flex;
     flex-direction: column;
     border: 1px solid black;
@@ -107,6 +110,10 @@ button:hover {
 .createprofile {
     display: flex;
     justify-content: center;
+}
+
+.picselect{
+    margin-left: auto;
 }
 
 .chart {
