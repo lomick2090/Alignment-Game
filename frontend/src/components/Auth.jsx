@@ -1,11 +1,9 @@
 import { auth } from "../config/firebase"
-
 import { signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 
 export default function Auth(props) {
 
 
-   console.log(auth?.currentUser?.uid)
 
     const provider = new TwitterAuthProvider();
 

@@ -16,7 +16,7 @@ export default function Quiz() {
     const copyList = userList
     const filteredUserList = copyList.filter(user => {
         const groupVotes = user.votes.find(groupVote => (groupVote.group == groupName))
-        const hasVoted = groupVotes?.hasVoted.includes(auth.currentUser?.uid)
+        const hasVoted = groupVotes?.hasVoted.includes(auth?.currentUser?.uid)
         
         if (currentUser == user || !groupVotes || hasVoted) {
             return false
@@ -48,8 +48,7 @@ export default function Quiz() {
                 if (groupVotes.group == groupName) {
                     const newLawfulVotes = groupVotes.lawfulVotes.concat(user.lawfulVote)
                     const newGoodVotes = groupVotes.goodVotes.concat(user.goodVote)
-                    const newHasVoted = groupVotes.hasVoted.concat(auth.currentUser.uid)
-                    console.log(newLawfulVotes, newGoodVotes)
+                    const newHasVoted = groupVotes.hasVoted.concat(auth?.currentUser?.uid)
                     return {
                         group: groupName,
                         lawfulVotes: newLawfulVotes,

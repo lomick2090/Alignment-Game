@@ -1,5 +1,4 @@
-import { db, auth } from "../config/firebase";
-import { getDocs, collection } from 'firebase/firestore'
+import { auth } from "../config/firebase";
 
 
 export default function returnUser(userList) {

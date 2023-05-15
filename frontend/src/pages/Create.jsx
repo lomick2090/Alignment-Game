@@ -40,7 +40,7 @@ export default function Create() {
 
     useEffect(() => {
         groupList.map(group => {
-            if (group.createdBy == auth?.currentUser.uid) {
+            if (group.createdBy == auth?.currentUser?.uid) {
                 setHasMadeGroup(true)
             }
         })

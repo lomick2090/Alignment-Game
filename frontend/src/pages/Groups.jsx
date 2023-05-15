@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link, Navigate, Routes, Route } from 'react-router-dom'
+import { Link, Routes, Route } from 'react-router-dom'
 import { db } from "../config/firebase"
 import { getDocs, collection } from 'firebase/firestore'
-import { auth } from '../config/firebase';
 import GroupPage from './GroupPage';
 
 export default function Groups() {

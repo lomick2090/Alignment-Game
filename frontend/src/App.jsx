@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { UserContextProvider } from './utils/Context';
 import Header from './components/Header'
 import Quiz from './pages/Quiz'
@@ -24,6 +24,7 @@ export default function App() {
                     <Route path='groups/*' element={ <Groups /> } />
                     <Route path='groups/:groupName' element={<GroupPage />} />
                     <Route path='groups/:groupName/quiz' element={<Quiz />} />
+                    <Route path='*' element={<Navigate to='/' />}/>
 
                 </Route>
             </Routes>

@@ -1,7 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { getDocs, collection } from "firebase/firestore"
-import { ref, getDownloadURL } from 'firebase/storage'
-import { db, storage } from "../config/firebase"
+import { db } from "../config/firebase"
 
 const UserContext = createContext();
 

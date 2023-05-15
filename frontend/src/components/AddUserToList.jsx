@@ -2,7 +2,6 @@ import { db, auth, storage } from '../config/firebase'
 import { getDocs, setDoc, doc, collection } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 
 
 export default function AddUserToList() {
@@ -73,7 +72,6 @@ export default function AddUserToList() {
                 })
 
                 const groupUsersRef = doc(db, 'groups', user.group);
-                console.log(groupUsersRef.data())
                 await setDoc(groupUsersRef)
             } catch(err) {
                 console.log(err)

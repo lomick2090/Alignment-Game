@@ -1,8 +1,5 @@
 import { useParams, Link } from "react-router-dom"
-import { useState, useEffect } from "react"
-import { db, auth, storage } from "../config/firebase"
-import { doc, setDoc } from "firebase/firestore"
-import { ref, getDownloadURL } from 'firebase/storage'
+import { db, auth } from "../config/firebase"
 import { useUserContext } from "../utils/Context"
 import returnUser from "../utils/returnUser"
 import User from '../components/User'
