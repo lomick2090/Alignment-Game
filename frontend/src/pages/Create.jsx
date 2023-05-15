@@ -1,16 +1,19 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { db } from "../config/firebase";
-import { addDoc, collection } from 'firebase/firestore';
+import { setDoc, doc } from 'firebase/firestore';
+import { auth } from '../config/firebase';
 
 
 export default function Create() {
     const [group, setGroup] = useState('')
-    const groupsRef = collection(db, 'groups')
+    
 
     async function handleSubmit() {
         if (group) {
             try {
-                await addDoc(groupsRef, {groupName: group, createdBy: auth?.currentUser?.uid})
+                const groupsRef = doc(db, 'groups', group)
+                await setDoc(groupsRef, {groupName: group, createdBy: auth?.currentUser?.uid})
             } catch(err) {
                 console.log(err)
             }

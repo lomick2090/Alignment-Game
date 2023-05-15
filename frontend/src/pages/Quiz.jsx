@@ -3,7 +3,7 @@ import returnUser from '../utils/returnUser';
 import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import QuizUnit from '../components/QuizUnit';
-import { db } from '../config/firebase'
+import { db, auth } from '../config/firebase'
 import { setDoc, doc } from 'firebase/firestore';
 
 
@@ -13,9 +13,12 @@ export default function Quiz() {
     const currentUser = returnUser(userList)
     const { groupName } = useParams()
 
-    const filteredUserList = userList.filter(user => {
-        const hasVoted = user.votes.filter(id => (id == auth.currentUser?.uid))
-        if (currentUser == user || groupName != user.group || hasVoted) {
+    const copyList = userList
+    const filteredUserList = copyList.filter(user => {
+        const groupVotes = user.votes.find(groupVote => (groupVote.group == groupName))
+        const hasVoted = groupVotes?.hasVoted.includes(auth.currentUser?.uid)
+        
+        if (currentUser == user || !groupVotes || hasVoted) {
             return false
         } else {
             return true
@@ -26,11 +29,9 @@ export default function Quiz() {
         const votes = filteredUserList.map(user => {
             return {
                 name: user.name,
-                group: user.group,
+                groups: user.groups,
                 goodVote: 10,
                 lawfulVote: 10,
-                oldGoodVotes: user.goodVotes,
-                oldLawfulVotes: user.lawfulVotes,
                 userId: user.userId,
                 pictureURL: user.pictureURL,
                 votes: user.votes
@@ -40,25 +41,38 @@ export default function Quiz() {
 
     }, [userList])
 
-    function handleSubmit() {
+    async function handleSubmit() {
         voteInfo.map(async user => {
             const usersRef = doc(db, 'users', user.userId);
-            const newGoodVotes = user.oldGoodVotes.concat(user.goodVote)
-            const newLawfulVotes = user.oldLawfulVotes.concat(user.lawfulVote)
-            const newUserVotes = user.votes.concat(auth.currentUser?.uid)
+            const newUserVotes = user.votes.map(groupVotes => {
+                if (groupVotes.group == groupName) {
+                    const newLawfulVotes = groupVotes.lawfulVotes.concat(user.lawfulVote)
+                    const newGoodVotes = groupVotes.goodVotes.concat(user.goodVote)
+                    const newHasVoted = groupVotes.hasVoted.concat(auth.currentUser.uid)
+                    console.log(newLawfulVotes, newGoodVotes)
+                    return {
+                        group: groupName,
+                        lawfulVotes: newLawfulVotes,
+                        goodVotes: newGoodVotes,
+                        hasVoted: newHasVoted
+                    }
+                } else {
+                    return groupVotes
+                }
+            })
             await setDoc(usersRef, {
                 name: user.name,
-                group: user.group,
-                lawfulVotes: newGoodVotes,
-                goodVotes: newLawfulVotes,
+                groups: user.groups,
                 userId: user.userId,
                 pictureURL: user.pictureURL,
                 votes: newUserVotes
             })
-            
-            
         })
-        window.location.href = '..'
+        
+        setTimeout(() => {
+            window.location.href = `../../groups/${groupName}`
+        }, 1000)
+
     }
     
     const quizElements = filteredUserList.map((user, index) => {

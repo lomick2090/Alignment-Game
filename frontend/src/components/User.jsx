@@ -8,7 +8,6 @@ export default function User(props) {
     }
 
 
-
     const avgLawful = ((props.lawfulVotes?.reduce((a,b) => parseInt(a) + parseInt(b), 0))/(props.lawfulVotes?.length)) || 10
     const avgGood = ((props.goodVotes?.reduce((a,b) => parseInt(a) + parseInt(b), 0))/(props.goodVotes?.length)) || 10
     const userStyle = {
@@ -24,6 +23,7 @@ export default function User(props) {
 
     const picStyle = {
         width: '115px',
+        maxHeight: '135px',
         borderRadius: '40%',
     }
 

@@ -61,13 +61,20 @@ export default function AddUserToList() {
                 const usersRef = doc(db, 'users', auth?.currentUser?.uid);
                 await setDoc(usersRef, {
                     name: user.name,
-                    group: user.group,
-                    lawfulVotes: [],
-                    goodVotes: [],
+                    groups: [user.group],
                     userId: auth?.currentUser?.uid,
                     pictureURL,
-                    votes: []
+                    votes:[{
+                        group: user.group,
+                        lawfulVotes: [],
+                        goodVotes: [],
+                        hasVoted: []
+                    }]
                 })
+
+                const groupUsersRef = doc(db, 'groups', user.group);
+                console.log(groupUsersRef.data())
+                await setDoc(groupUsersRef)
             } catch(err) {
                 console.log(err)
             }

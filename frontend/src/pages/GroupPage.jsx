@@ -12,30 +12,34 @@ export default function GroupPage() {
     const { groupName } = useParams()
     const userList = useUserContext()
 
-    const userListOfGroup = userList.filter(user => {
-        return user.group.includes(groupName)
+    const userCopy = userList
+    const userListOfGroup = userCopy.filter(user => {
+        return user.groups.includes(groupName)
     })
 
     const userElements = userListOfGroup.map(user => {
-        const {goodVotes, lawfulVotes, name, pictureURL} = user
-        return( <User key={name} goodVotes={goodVotes} lawfulVotes={lawfulVotes} name={name} pictureURL={pictureURL} />)
+        
+            const {votes, name, pictureURL} = user
+
+            const groupVotes = votes.find(groupVote => (groupVote.group == groupName))
+            const { goodVotes, lawfulVotes } = groupVotes
+            return( <User key={name} goodVotes={goodVotes} lawfulVotes={lawfulVotes} name={name} pictureURL={pictureURL} />)
     })
 
     async function handleJoin() {
         const user = returnUser(userList)
-        if (user.group.length > 4) {
+        if (user.groups.length > 4) {
             alert('You can only join 5 groups')
         } else {
-            const newgroups = user.group.concat(groupName)
+            const newgroups = user.groups.concat(groupName)
             const usersRef = doc(db, 'users', user.userId);
+            const newVotes = user.votes.concat({group:groupName, lawfulVotes:[], goodVotes:[], hasVoted:[]})
             await setDoc(usersRef, {
                     name: user.name,
-                    group: newgroups,
-                    lawfulVotes: user.lawfulVotes,
-                    goodVotes: user.goodVotes,
+                    groups: newgroups,
                     userId: user.userId,
                     pictureURL: user.pictureURL,
-                    votes: user.votes
+                    votes: newVotes
             })
             location.reload()
         }
@@ -56,7 +60,7 @@ export default function GroupPage() {
                         <Link to='../../login/createprofile'><button>Create Profile</button></Link>
                         :
                         (
-                            (returnUser(userList).group.includes(groupName)) ?
+                            (returnUser(userList).groups.includes(groupName)) ?
                             <Link to='quiz'><button>Take Group Quiz</button></Link>
                             :
                             <button onClick={handleJoin}>Join Group</button>

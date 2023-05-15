@@ -9,9 +9,9 @@ export default function CreateProfile() {
     return (
         <div className='createprofile'>
             {
-                returnUser(userList) ?
-                <Navigate to='../../groups' />
-                :
+                //returnUser(userList) ?
+                //<Navigate to='../../groups' />
+                //:
                 <AddUserToList />
             }
 

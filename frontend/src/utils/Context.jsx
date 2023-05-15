@@ -19,15 +19,13 @@ function UserContextProvider({children}) {
 
             
             let usableList = await Promise.all(filteredList.map(async user => {
-                const {goodVotes, lawfulVotes, name, pictureURL, userId, group, votes} = user.data()
+                const {name, pictureURL, userId, groups, votes} = user.data()
 
                 return {
                     name,
-                    goodVotes,
-                    lawfulVotes,
                     pictureURL,
                     userId,
-                    group,
+                    groups,
                     votes
                 }
             }))
@@ -42,8 +40,6 @@ function UserContextProvider({children}) {
     useEffect(() => {
         getUserList()
     }, [])
-
-    console.log(userList)
 
     return (
         <UserContext.Provider value={userList}>

@@ -1,14 +1,9 @@
 import { auth } from "../config/firebase"
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react'
+
 import { signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 
 export default function Auth(props) {
-    
-   // const [login, setLogin] = useState({
-   //     email: '',
-   //     password: ''
-   // })
+
 
    console.log(auth?.currentUser?.uid)
 
@@ -45,8 +40,6 @@ export default function Auth(props) {
 
     return (
         <div>
-            {/* <input placeholder="email" name='email' value={login.email} onChange={handleChange}/>
-            <input type="password" placeholder="password" name='password' value={login.password} onChange={handleChange}/> */}
             <button onClick={signIn}>Sign In With Twitter</button>
         </div>
     )
